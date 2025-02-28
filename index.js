@@ -129,7 +129,7 @@ app.post("/webhook", async (req, res) => {
 
   // Step 3: Validate Importer ID
   if (!userloggedin && parameters.importer_id) {
-    const importerID = parameters.importer_id;
+    const importerID = String(parameters.importer_id).trim();
 
     if (importerData.includes(importerID)) {
       const filePath = `./datafiles/${importerID}.pdf`;
