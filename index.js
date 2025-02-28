@@ -136,16 +136,35 @@ app.post("/webhook", async (req, res) => {
       const importerDetails = await extractPDFText(filePath); // Read the corresponding PDF file
       contextText =  importerDetails + "\n\n" + basicinfo; // Append Importer details
       userloggedin = true;
-      return res.json({ fulfillmentText: `
-          ✅ Verified Importer! What would you like to know?
-          1.   🔑Want to login in CRM
-          2.   📦 Product Catalog & Pricing
-          3.   📋 Order Status & Tracking
-          4.   📜 Compliance & Documentation
-          5.   🛠️ After-Sales Support
-          6.   📞 Speak to a Sales Representative
-
-        ` });
+      return res.json({
+      "fulfillmentMessages": [
+        {
+          "platform": "GOOGLE",
+          "payload": {
+            "richContent": [
+              [
+                {
+                  "type": "description",
+                  "title": "✅ Verified Importer!",
+                  "text": ["What would you like to know?"]
+                },
+                {
+                  "type": "chips",
+                  "options": [
+                    { "text": "🔑 Login in CRM" },
+                    { "text": "📦 Product Catalog & Pricing" },
+                    { "text": "📋 Order Status & Tracking" },
+                    { "text": "📜 Compliance & Documentation" },
+                    { "text": "🛠️ After-Sales Support" },
+                    { "text": "📞 Speak to a Sales Representative" }
+                  ]
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    });
     } else {
       return res.json({ fulfillmentText: "❌ Invalid Importer ID. You can only ask general questions." });
     }
