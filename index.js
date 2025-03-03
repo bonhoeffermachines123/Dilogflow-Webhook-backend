@@ -169,10 +169,7 @@ app.post("/webhook", async (req, res) => {
 
     if (importerData.includes(importerID)) {
         
-      return res.json({
-              fulfillmentMessages: "Valid importer, ask practice Question"
-              
-          });
+       return res.json({ fulfillmentText: "Valid Importer ID. You can only ask general questions."});
 
     } else {
         return res.json({ fulfillmentText: "❌ Invalid Importer ID. You can only ask general questions." });
