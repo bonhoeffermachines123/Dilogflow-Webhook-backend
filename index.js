@@ -170,17 +170,8 @@ app.post("/webhook", async (req, res) => {
     if (importerData.includes(importerID)) {
         
       return res.json({
-              fulfillmentMessages: "Valid importer, ask practice Question",
-              outputContexts: [
-                {
-                    name: `projects/${projectId}/agent/sessions/${sessionId}/contexts/user_role_context`,
-                    lifespanCount: 50,  // Stores for 50 rounds
-                    parameters: { 
-                        user_role: "importer",
-                        importer_id: importerID 
-                    }
-                }
-              ]
+              fulfillmentMessages: "Valid importer, ask practice Question"
+              
           });
 
     } else {
