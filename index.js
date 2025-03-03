@@ -117,7 +117,8 @@ app.post("/webhook", async (req, res) => {
     if (ur === "importer") {
       
       if(importerID){
-        const filePath = `./datafiles/${importerID}.pdf`;
+        let importerid = String(importerID).trim();
+        const filePath = `./datafiles/${importerid}.pdf`;
         const importerDetails = await extractPDFText(filePath); // Read the corresponding PDF file
         contextText = importerDetails + "\n\n" + basicinfo; // Append Importer details
         console.log("Contexttext is :\n",contextText);
