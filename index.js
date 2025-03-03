@@ -169,25 +169,29 @@ app.post("/webhook", async (req, res) => {
 
     if (importerData.includes(importerID)) {
         
-        return res.json({
-            fulfillmentText:"✅ Verified Importer! What would you like to know?\n" +
-                 "1️⃣ 🔑 Want to login in CRM\n" +
-                 "2️⃣ 📦 Product Catalog & Pricing\n" +
-                 "3️⃣ 📋 Order Status & Tracking\n" +
-                 "4️⃣ 📜 Compliance & Documentation\n" +
-                 "5️⃣ 🛠️ After-Sales Support\n" +
-                 "6️⃣ 📞 Speak to a Sales Representative",
-            outputContexts: [
-                {
-                    name: `projects/${projectId}/agent/sessions/${sessionId}/contexts/user_role_context`,
-                    lifespanCount: 50,  // Stores for 50 rounds
-                    parameters: { 
-                        user_role: "importer",
-                        importer_id: importerID 
-                    }
-                }
-            ]
-        });
+      return res.json({
+              fulfillmentMessages: [
+                  {
+                      "text": {
+                          "text": ["✅ Verified Importer! What would you like to know?"]
+                      }
+                  },
+                  {
+                      "quickReplies": {
+                          "title": "Choose an option:",
+                          "quickReplies": [
+                              "🔑 Login to CRM",
+                              "📦 Product Catalog & Pricing",
+                              "📋 Order Status & Tracking",
+                              "📜 Compliance & Documentation",
+                              "🛠️ After-Sales Support",
+                              "📞 Speak to a Sales Representative"
+                          ]
+                      }
+                  }
+              ]
+          });
+
     } else {
         return res.json({ fulfillmentText: "❌ Invalid Importer ID. You can only ask general questions." });
     }
