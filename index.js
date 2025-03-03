@@ -163,7 +163,7 @@ app.post("/webhook", async (req, res) => {
 
   // for validating importer id
   if (parameters.importer_id) {
-    const importerID = parameters.importer_id;
+    const importerID = String(parameters.importer_id).trim();
     const projectId = "bonhoefferbot-hsja";  // Your Dialogflow project ID
     const sessionId = req.body.session;  // Extract session ID from request
 
