@@ -165,14 +165,15 @@ app.post("/webhook", async (req, res) => {
   // for validating importer id
   if (parameters.importer_id) {
     const importerID = String(parameters.importer_id).trim();
-    console.log("I am in Parameter.importer, Your importer id:",importerID);
-    const projectId = "bonhoefferbot-hsja";  // Your Dialogflow project ID
-    const sessionId = req.body.session; // Extract session ID from request
+    console.log("I am in Parameter.importer, Your importer ID:", importerID);
+
+    const sessionId = req.body.session; // ✅ Extract session ID correctly
 
     if (importerData.includes(importerID)) {
-        console.log('I am in valid importer with sessionid:',sessionId);
+        console.log('I am in valid importer with session ID:', sessionId);
+        
         return res.json({
-            fulfillmentText:[
+            fulfillmentMessages: [  // ✅ Use fulfillmentMessages, not fulfillmentText
                 {
                     "payload": {
                         "richContent": [
@@ -185,6 +186,7 @@ app.post("/webhook", async (req, res) => {
                                     ]
                                 },
                                 {
+                                    "type": "chips", // ✅ Correct rich content structure
                                     "options": [
                                         {
                                             "text": "🔑 Want to login in CRM",
@@ -234,8 +236,7 @@ app.post("/webhook", async (req, res) => {
                                                 }
                                             }
                                         }
-                                    ],
-                                    "type": "chips"
+                                    ]
                                 }
                             ]
                         ]
@@ -257,7 +258,8 @@ app.post("/webhook", async (req, res) => {
     } else {
         return res.json({ fulfillmentText: "❌ Invalid Importer ID. You can only ask general questions." });
     }
-  }
+}
+
 
 
   // Step 4: Generate AI Response using updated context
