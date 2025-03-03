@@ -172,7 +172,76 @@ app.post("/webhook", async (req, res) => {
     if (importerData.includes(importerID)) {
         console.log('I am in valid importer with sessionid:',sessionId);
         return res.json({
-            fulfillmentText: "✅ Valid Importer ID. Now you can ask general or importer-specific questions.",
+            fulfillmentText:[
+                {
+                    "payload": {
+                        "richContent": [
+                            [
+                                {
+                                    "title": "✅ Verified Importer!",
+                                    "type": "description",
+                                    "text": [
+                                        "What would you like to know?"
+                                    ]
+                                },
+                                {
+                                    "options": [
+                                        {
+                                            "text": "🔑 Want to login in CRM",
+                                            "image": {
+                                                "src": {
+                                                    "rawUrl": "https://st2.depositphotos.com/1006318/5909/v/450/depositphotos_59094701-stock-illustration-businessman-profile-icon.jpg"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "text": "📦 Product Catalog & Pricing",
+                                            "image": {
+                                                "src": {
+                                                    "rawUrl": "https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308458-stock-illustration-unknown-person-silhouette-profile-picture.jpg"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "text": "📋 Order Status & Tracking",
+                                            "image": {
+                                                "src": {
+                                                    "rawUrl": "https://static.vecteezy.com/system/resources/previews/029/271/062/non_2x/avatar-profile-icon-in-flat-style-male-user-profile-illustration-on-isolated-background-man-profile-sign-business-concept-vector.jpg"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "text": "📜 Compliance & Documentation",
+                                            "image": {
+                                                "src": {
+                                                    "rawUrl": "https://www.shutterstock.com/image-vector/office-building-vector-illustration-landmark-600nw-2428966541.jpg"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "text": "🛠️ After-Sales Support",
+                                            "image": {
+                                                "src": {
+                                                    "rawUrl": "https://www.shutterstock.com/image-vector/office-building-vector-illustration-landmark-600nw-2428966541.jpg"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "text": "📞 Speak to a Sales Representative",
+                                            "image": {
+                                                "src": {
+                                                    "rawUrl": "https://media.istockphoto.com/id/1173381785/vector/farmer-driving-tractor-with-plough-illustration.jpg?s=612x612&w=0&k=20&c=OvnBls1znb3GJ_bPyJt9sAusSttno5fwk1zqmowF3h0="
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "type": "chips"
+                                }
+                            ]
+                        ]
+                    }
+                }
+            ],
             outputContexts: [
                 {
                     name: `${sessionId}/contexts/user_role_context`, // ✅ Use sessionId as is
