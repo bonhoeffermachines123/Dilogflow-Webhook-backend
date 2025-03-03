@@ -170,17 +170,7 @@ app.post("/webhook", async (req, res) => {
     if (importerData.includes(importerID)) {
         
         return res.json({
-            fulfillmentText: "✅ Valid Importer ID. Now you can ask general or importer-specific questions.",
-            outputContexts: [
-                {
-                    name: `projects/${projectId}/agent/sessions/${sessionId}/contexts/user_role_context`,
-                    lifespanCount: 50,  // Stores for 50 interactions
-                    parameters: { 
-                        user_role: "importer",
-                        importer_id: importerID
-                    }
-                }
-            ]
+            fulfillmentText: "✅ Valid Importer ID. Now you can ask general or importer-specific questions."
         });
 
     } else {
