@@ -167,12 +167,22 @@ app.post("/webhook", async (req, res) => {
     const importerID = String(parameters.importer_id).trim();
     console.log("I am in Parameter.importer, Your importer id:",importerID);
     const projectId = "bonhoefferbot-hsja";  // Your Dialogflow project ID
-    const sessionId = req.body.session || req.body.sessionId || "default-session"; // Extract session ID from request
+    const sessionId = req.body.session; // Extract session ID from request
 
     if (importerData.includes(importerID)) {
         console.log('I am in valid importer with sessionid:',sessionId);
         return res.json({
-            fulfillmentText: "✅ Valid Importer ID. Now you can ask general or importer-specific questions."
+            fulfillmentText: "✅ Valid Importer ID. Now you can ask general or importer-specific questions.",
+            outputContexts: [
+                {
+                    name: `${sessionId}/contexts/user_role_context`, // ✅ Use sessionId as is
+                    lifespanCount: 50,  // Stores for 50 interactions
+                    parameters: { 
+                        user_role: "importer",
+                        importer_id: importerID
+                    }
+                }
+            ]
         });
 
     } else {
