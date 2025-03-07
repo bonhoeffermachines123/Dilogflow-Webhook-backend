@@ -1,0 +1,5 @@
+node_modules
+checkmodels.js
+firebaseadminsdk.json
+.env
+extract.js
