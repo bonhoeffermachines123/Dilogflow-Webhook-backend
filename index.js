@@ -41,12 +41,14 @@ async function extractPDFText(pdfPath) {
 var basicinfo = "";
 var customers = "";
 var dealers = "";
+var productdetails = "";
 
 
 async function loadPDF(){
   basicinfo = await extractPDFText("./datafiles/Basicinfo.pdf");
   customers = await extractPDFText("./datafiles/Customers.pdf");
   dealers = await extractPDFText("./datafiles/Dealers.pdf");
+  productdetails = await extractPDFText("./datafiles/product_details.pdf");
   // console.log("contextText:",contextText);
 }
 
@@ -115,6 +117,174 @@ app.post("/webhook", async (req, res) => {
   let importerID = userRoleContext?.parameters?.importer_id || null;
 
 
+  //For Product segment normally:
+  if(parameters.user_role.toLowerCase() == "product segments" || userRole.toLowerCase() == "product segments"){
+
+        if(parameters.user_role){
+            return res.json({
+                fulfillmentMessages: [
+                    {
+                        "payload": {
+                            "richContent": [
+                                [
+                                    {
+                                      
+                                        "type": "description",
+                                        "text": [
+                                            "Now, please select a product category:"
+                                        ]
+                                    },
+                                    {
+                                        "type": "chips",
+                                        "options": [
+                                            { "text": "Agro Industrial" },
+                                            { "text": "Bonhoeffer Industrial" },
+                                            { "text": "Construction" },
+                                            { "text": "Diesel Machines" },
+                                            { "text": "Domestic and Commercial Products" },
+                                            { "text": "Electric Machines" },
+                                            { "text": "Garden and Forestry" },
+                                            { "text": "Wood Chiper and Chaff cutter" },
+                                            { "text": "Solar" },
+                                            { "text": "Special Segment" },
+                                            { "text": "Sprayers and Fumigation" },
+                                        ]
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            });
+        }
+
+
+        if(parameters.product_category){
+          const selectedCategory = parameters.product_category.toLowerCase();
+          // console.log("User selected category:", selectedCategory);
+        
+          let productOptions = [];
+          if (selectedCategory === "agro") {
+              productOptions = [
+                  { "text": "Gasoline Generators" },
+                  { "text": "Gasoline Inverter Generators" },
+                  { "text": "Gasoline Tillers" },
+                  { "text": "Gasoline water Pumps" },
+                  { "text": "Gasoline Engines" },
+              ];
+          } else if (selectedCategory === "harvesting machines") {
+              productOptions = [
+                  { "text": "Harvester" }
+              ];
+          } else if (selectedCategory === "construction equipment") {
+              productOptions = [
+                  { "text": "Excavator" }
+              ];
+          }
+        
+          return res.json({
+            fulfillmentMessages: [
+                    {
+                        "payload": {
+                            "richContent": [
+                                [
+                                    {
+                                        "type": "description",
+                                        "text": [
+                                            "Now, please select a product:"
+                                        ]
+                                    },
+                                    {
+                                        "type": "chips",
+                                        "options": productOptions
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            });
+        }
+
+
+
+        if (parameters.product) {
+          const selectedProduct = parameters.product.toLowerCase();
+          // console.log("User selected product:", selectedProduct);
+        
+          let modelOptions = [];
+          if (selectedProduct === "gasoline generators") {
+              modelOptions = [
+                  { "text": "BON-P-GG-2.8KW" },
+                  { "text": "BON-P-GG-3.7KW" },
+                  { "text": "BON-P-GG-5.0KW" },
+                  { "text": "BON-P-GG-7.5KW" },
+                  { "text": "BON-P-GG-9.0KW" },
+                  { "text": "BON-P-GG-9.5KW" },
+                  { "text": "BON-P-GG-12.0KW" },
+                  { "text": "BON-P-GG-13.5KW" },
+                  { "text": "BON-P-GG-16.0KW" },
+                  { "text": "BON-P-GG-18.5KW" },
+                  
+              ];
+          } else if (selectedProduct === "harvester") {
+              modelOptions = [
+                  { "text": "Harvester Pro 500" },
+                  { "text": "Harvester Max 700" }
+              ];
+          } else if (selectedProduct === "excavator") {
+              modelOptions = [
+                  { "text": "Excavator E300" },
+                  { "text": "Excavator E500" }
+              ];
+          }
+        
+          return res.json({
+              fulfillmentMessages: [
+                  {
+                      "payload": {
+                          "richContent": [
+                              [
+                                  {
+                                      "title": `Selected Product: ${selectedProduct}`,
+                                      "type": "description",
+                                      "text": [
+                                          "Now, please select a model:"
+                                      ]
+                                  },
+                                  {
+                                      "type": "chips",
+                                      "options": modelOptions
+                                  }
+                              ]
+                          ]
+                      }
+                  }
+              ]
+          });
+        }
+
+
+      if (parameters.product_model) {
+       
+        contextText = productdetails + basicinfo;
+        const query = `Provide details for model ${parameters.product_model}, if it is present in the document. otherwise responde 'Sorry, this product is not present in our data'`;
+        const aiResponse = await generateAIResponse(query, contextText);
+        return res.json({ fulfillmentText: aiResponse });
+    
+      }
+
+
+        contextText = productdetails + basicinfo;
+        const query = `Answer the query: ${userQuery}, if present in out context.`;
+        const aiResponse = await generateAIResponse(query, contextText);
+        return res.json({ fulfillmentText: aiResponse });
+  
+  
+  }
+
+
+
 
   if (!parameters.product_model && parameters.importer_option) {
     const selectedOption = parameters.importer_option.toLowerCase();
@@ -142,9 +312,10 @@ app.post("/webhook", async (req, res) => {
                             {
                                 "type": "chips",
                                 "options": [
-                                    { "text": "Agriculture Machines" },
-                                    { "text": "Harvesting Machines" },
-                                    { "text": "Construction Equipment" }
+                                    { "text": "Agro Industrial" },
+                                    { "text": "Bonhoeffer Industrial" },
+                                    { "text": "Construction" },
+
                                 ]
                             }
                         ]
@@ -270,7 +441,7 @@ if (parameters.product) {
         contextText = importerDetails + "\n\n" + basicinfo; // Append Importer details
         // console.log("Contexttext is :\n",contextText);
       }else{
-        return res.json({ fulfillmentText: 'Something went wrong because of global context:' });
+        return res.json({ fulfillmentText: 'Importer id is not provided or invalid:' });
       }
 
     }
@@ -318,11 +489,12 @@ if (parameters.product) {
 
   // do the following when there will be no data in context:
   // parameter based action based on first time:
-  if (parameters.user_role) {
+  if (parameters.user_role){
+    //In this we need to provide options:
     const ur = parameters.user_role.toLowerCase();
 
     if (ur === "importer") {
-      return res.json({ fulfillmentText: "Please provide your Importer ID for verification: like(My Importer id is -----)" });
+      return res.json({ fulfillmentText: "Please provide your Importer ID for verification:" });
     }
     else if(ur === "customer"){
       contextText = customers + "\n" + basicinfo; // Append Dealer & Customer data
