@@ -48,7 +48,7 @@ async function loadPDF(){
   basicinfo = await extractPDFText("./datafiles/Basicinfo.pdf");
   customers = await extractPDFText("./datafiles/Customers.pdf");
   dealers = await extractPDFText("./datafiles/Dealers.pdf");
-  productdetails = await extractPDFText("./datafiles/agro.pdf");
+  productdetails = await extractPDFText("./datafiles/product-details.pdf");
   // console.log("contextText:",contextText);
 }
 
