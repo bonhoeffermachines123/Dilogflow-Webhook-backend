@@ -48,7 +48,7 @@ async function loadPDF(){
   basicinfo = await extractPDFText("./datafiles/Basicinfo.pdf");
   customers = await extractPDFText("./datafiles/Customers.pdf");
   dealers = await extractPDFText("./datafiles/Dealers.pdf");
-  productdetails = await extractPDFText("./datafiles/product_details.pdf");
+  productdetails = await extractPDFText("./datafiles/agro.pdf");
   // console.log("contextText:",contextText);
 }
 
@@ -281,6 +281,7 @@ app.post("/webhook", async (req, res) => {
       if (parameters.product_model) {
        
         contextText = productdetails + basicinfo;
+
         const query = `Provide details for model ${parameters.product_model}, if it is present in the document. otherwise responde 'Sorry, this product is not present in our data'`;
         const aiResponse = await generateAIResponse(query, contextText);
         return res.json({ fulfillmentText: aiResponse });
