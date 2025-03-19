@@ -155,16 +155,16 @@ app.post("/webhook", async (req, res) => {
                                         ]
                                     }
                                 ]
-                            ],
-                            outputContexts: [
-                                {
-                                    name: `${sessionId}/contexts/user_role_context`, // ✅ Use sessionId as is
-                                    lifespanCount: 50,  // Stores for 50 interactions
-                                    parameters: { 
-                                        user_role: "product segments"
-                                    }
-                                }
-                            ]
+                            ]                           
+                        }
+                    }
+                ],
+                outputContexts: [
+                    {
+                        name: `${sessionId}/contexts/user_role_context`, // ✅ Use sessionId as is
+                        lifespanCount: 50,  // Stores for 50 interactions
+                        parameters: { 
+                            user_role: "product segments"
                         }
                     }
                 ]
@@ -528,29 +528,61 @@ if (parameters.product) {
         console.log('I am in valid importer with session ID:', sessionId);
         
         return res.json({
-            fulfillmentMessages: [
+            fulfillmentMessages: [  // ✅ Use fulfillmentMessages, not fulfillmentText
                 {
                     "payload": {
                         "richContent": [
                             [
                                 {
+                                    "title": "✅ Verified Importer!",
                                     "type": "description",
-                                    "text": ["Now, please select a product category:"]
+                                    "text": [
+                                        "What would you like to know?"
+                                    ]
                                 },
                                 {
-                                    "type": "chips",
+                                    "type": "chips", // ✅ Correct rich content structure
                                     "options": [
-                                        { "text": "Agro Industrial" },
-                                        { "text": "Bonhoeffer Industrial" },
-                                        { "text": "Construction" },
-                                        { "text": "Diesel Machines" },
-                                        { "text": "Domestic and Commercial Products" },
-                                        { "text": "Electric Machines" },
-                                        { "text": "Garden and Forestry" },
-                                        { "text": "Wood Chiper and Chaff cutter" },
-                                        { "text": "Solar" },
-                                        { "text": "Special Segment" },
-                                        { "text": "Sprayers and Fumigation" }
+                                      {
+                                            "text": "Invoice"
+                                    
+                                      },
+                                      {
+                                          "text": "Packing List"
+                                  
+                                      },  
+                                      {
+                                            "text": "Shipment Date"
+                                    
+                                        },
+                                      {
+                                            "text": "Tentative Production Time"
+                                    
+                                        },
+                                      {
+                                            "text": "Product Price List"
+                                    
+                                        },
+                                      {
+                                            "text": "MOQ(Minimum Order Quantity)"
+                                    
+                                        },
+                                      {
+                                            "text": "Flyers"
+                                    
+                                        },
+                                      {
+                                            "text": "User Manuals"
+                                    
+                                        },
+                                      {
+                                            "text": "Product Technical Details"
+                                    
+                                        },
+                                      {
+                                            "text": "CRM Login"
+                                    
+                                        },
                                     ]
                                 }
                             ]
@@ -558,17 +590,17 @@ if (parameters.product) {
                     }
                 }
             ],
-            outputContexts: [  // ✅ Moved outputContexts outside of "payload"
+            outputContexts: [
                 {
-                    name: `${sessionId}/contexts/user_role_context`, 
-                    lifespanCount: 50,
+                    name: `${sessionId}/contexts/user_role_context`, // ✅ Use sessionId as is
+                    lifespanCount: 50,  // Stores for 50 interactions
                     parameters: { 
-                        user_role: "product segments"
+                        user_role: "importer",
+                        importer_id: importerID
                     }
                 }
             ]
         });
-        
 
     } else {
         return res.json({ fulfillmentText: "❌ Invalid Importer ID. You can only ask general questions." });
