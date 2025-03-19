@@ -118,7 +118,7 @@ app.post("/webhook", async (req, res) => {
 
 
   //For Product segment normally:
-  console.log("user role:",parameters.user_role, " and in lowercase:", parameters.user_role.toLowerCase());
+  console.log("user role:",parameters?.user_role, " and in lowercase:", parameters?.user_role?.toLowerCase());
   if(parameters?.user_role?.toLowerCase() == "product segments" || userRole?.toLowerCase() == "product segments"){
 
         if(parameters.user_role){
