@@ -104,7 +104,7 @@ app.post("/webhook", async (req, res) => {
   const userQuery = req.body.queryResult.queryText;
   const parameters = req.body.queryResult.parameters;
   let contextText = basicinfo;
-  console.log("Parameters are: ",parameters, " req.body.queryResult: ",req.body.queryResult);
+  console.log("req.body :  ", req.body);
   
   const sessionId = req.body.session; // ✅ Extract session ID correctly
   // console.log("Req.body is:", req.body);
@@ -120,8 +120,9 @@ app.post("/webhook", async (req, res) => {
 
 
   //For Product segment normally:
-  console.log("user role:",parameters?.user_role, " and in lowercase:", parameters?.user_role?.toLowerCase());
+//   console.log("user role:",parameters?.user_role, " and in lowercase:", parameters?.user_role?.toLowerCase());
   if(userRole?.toLowerCase() == "product segments" || parameters?.user_role?.toLowerCase() == "product segments" ){
+    console.log("Present in Explore segment section:");
 
         if(parameters.user_role){
             return res.json({
