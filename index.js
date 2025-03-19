@@ -281,6 +281,7 @@ app.post("/webhook", async (req, res) => {
       if (parameters.product_model) {
        
         contextText = productdetails + basicinfo;
+        console.log("Our context : ",contextText);
 
         const query = `Provide details for model ${parameters.product_model}, if it is present in the document. otherwise responde 'Sorry, this product is not present in our data'`;
         const aiResponse = await generateAIResponse(query, contextText);
