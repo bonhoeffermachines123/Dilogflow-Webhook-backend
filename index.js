@@ -100,9 +100,11 @@ async function generateAIResponse(query, contextdoc) {
 
 // modifies webhook api
 app.post("/webhook", async (req, res) => {
+    console.clear();
   const userQuery = req.body.queryResult.queryText;
   const parameters = req.body.queryResult.parameters;
   let contextText = basicinfo;
+  console.log("Parameters are: ",parameters, " req.body.queryResult: ",req.body.queryResult);
   
   const sessionId = req.body.session; // ✅ Extract session ID correctly
   // console.log("Req.body is:", req.body);
