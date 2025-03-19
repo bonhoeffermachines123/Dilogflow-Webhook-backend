@@ -121,7 +121,7 @@ app.post("/webhook", async (req, res) => {
 
   //For Product segment normally:
   console.log("user role:",parameters?.user_role, " and in lowercase:", parameters?.user_role?.toLowerCase());
-  if(parameters?.user_role?.toLowerCase() == "product segments" || userRole?.toLowerCase() == "product segments"){
+  if(userRole?.toLowerCase() == "product segments" || parameters?.user_role?.toLowerCase() == "product segments" ){
 
         if(parameters.user_role){
             return res.json({
@@ -154,6 +154,15 @@ app.post("/webhook", async (req, res) => {
                                         ]
                                     }
                                 ]
+                            ],
+                            outputContexts: [
+                                {
+                                    name: `${sessionId}/contexts/user_role_context`, // ✅ Use sessionId as is
+                                    lifespanCount: 50,  // Stores for 50 interactions
+                                    parameters: { 
+                                        user_role: "product segments"
+                                    }
+                                }
                             ]
                         }
                     }
@@ -173,7 +182,7 @@ app.post("/webhook", async (req, res) => {
                   { "text": "Gasoline Inverter Generators" },
                   { "text": "Gasoline Tillers" },
                   { "text": "Gasoline water Pumps" },
-                  { "text": "Gasoline Engines" },
+                  { "text": "Gasoline Engines" }
               ];
           } else if (selectedCategory === "harvesting machines") {
               productOptions = [
