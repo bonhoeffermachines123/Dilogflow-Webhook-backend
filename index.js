@@ -528,61 +528,29 @@ if (parameters.product) {
         console.log('I am in valid importer with session ID:', sessionId);
         
         return res.json({
-            fulfillmentMessages: [  // ✅ Use fulfillmentMessages, not fulfillmentText
+            fulfillmentMessages: [
                 {
                     "payload": {
                         "richContent": [
                             [
                                 {
-                                    "title": "✅ Verified Importer!",
                                     "type": "description",
-                                    "text": [
-                                        "What would you like to know?"
-                                    ]
+                                    "text": ["Now, please select a product category:"]
                                 },
                                 {
-                                    "type": "chips", // ✅ Correct rich content structure
+                                    "type": "chips",
                                     "options": [
-                                      {
-                                            "text": "Invoice"
-                                    
-                                      },
-                                      {
-                                          "text": "Packing List"
-                                  
-                                      },  
-                                      {
-                                            "text": "Shipment Date"
-                                    
-                                        },
-                                      {
-                                            "text": "Tentative Production Time"
-                                    
-                                        },
-                                      {
-                                            "text": "Product Price List"
-                                    
-                                        },
-                                      {
-                                            "text": "MOQ(Minimum Order Quantity)"
-                                    
-                                        },
-                                      {
-                                            "text": "Flyers"
-                                    
-                                        },
-                                      {
-                                            "text": "User Manuals"
-                                    
-                                        },
-                                      {
-                                            "text": "Product Technical Details"
-                                    
-                                        },
-                                      {
-                                            "text": "CRM Login"
-                                    
-                                        },
+                                        { "text": "Agro Industrial" },
+                                        { "text": "Bonhoeffer Industrial" },
+                                        { "text": "Construction" },
+                                        { "text": "Diesel Machines" },
+                                        { "text": "Domestic and Commercial Products" },
+                                        { "text": "Electric Machines" },
+                                        { "text": "Garden and Forestry" },
+                                        { "text": "Wood Chiper and Chaff cutter" },
+                                        { "text": "Solar" },
+                                        { "text": "Special Segment" },
+                                        { "text": "Sprayers and Fumigation" }
                                     ]
                                 }
                             ]
@@ -590,17 +558,17 @@ if (parameters.product) {
                     }
                 }
             ],
-            outputContexts: [
+            outputContexts: [  // ✅ Moved outputContexts outside of "payload"
                 {
-                    name: `${sessionId}/contexts/user_role_context`, // ✅ Use sessionId as is
-                    lifespanCount: 50,  // Stores for 50 interactions
+                    name: `${sessionId}/contexts/user_role_context`, 
+                    lifespanCount: 50,
                     parameters: { 
-                        user_role: "importer",
-                        importer_id: importerID
+                        user_role: "product segments"
                     }
                 }
             ]
         });
+        
 
     } else {
         return res.json({ fulfillmentText: "❌ Invalid Importer ID. You can only ask general questions." });
