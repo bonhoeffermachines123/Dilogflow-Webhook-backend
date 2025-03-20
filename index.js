@@ -186,14 +186,75 @@ app.post("/webhook", async (req, res) => {
                   { "text": "Gasoline water Pumps" },
                   { "text": "Gasoline Engines" }
               ];
-          } else if (selectedCategory === "harvesting machines") {
+          } else if (selectedCategory === "industrial") {
               productOptions = [
-                  { "text": "Harvester" }
+                  { "text": "Welding Machines" },
+                  { "text": "Centrifugal Pumps" },
+                  { "text": "Submersible Pumps" }
               ];
-          } else if (selectedCategory === "construction equipment") {
+          } else if (selectedCategory === "construction") {
               productOptions = [
-                  { "text": "Excavator" }
+                  { "text": "Tamping Rammers" },
+                  { "text": "Plate Compactors" },
+                  { "text": "Concrete Cutters" },
+                  { "text": "Concrete Vibrators" },
+                  { "text": "Concrete Power Trowels" }
               ];
+          } else if (selectedCategory === "diesel") {
+                productOptions = [
+                    { "text": "Diesel Water Pumps" },
+                    { "text": "Diesel Generators" },
+                    { "text": "Diesel Engines" }
+                ];
+          } else if (selectedCategory === "domestic") {
+            productOptions = [
+                { "text": "Gasoline Pressure Washers" },
+                { "text": "Pressure Washers" },
+                { "text": "Direct Driven Air Compressors" },
+                { "text": "Vacuum Ceaners" }
+            ];
+          } else if (selectedCategory === "electric") {
+            productOptions = [
+                { "text": "Electric Lawn Mowers" },
+                { "text": "Electric Pressure Washers" }
+            ];
+          } else if (selectedCategory === "garden") {
+            productOptions = [
+                { "text": "Brush Cutters" },
+                { "text": "Backpack Brush Cutters" },
+                { "text": "Multi-Tool Equipment" },
+                { "text": "Chainsaws" },
+                { "text": "Hedge Trimmers" },
+                { "text": "Blowers" },
+                { "text": "Earth Augers" },
+                { "text": "Water Pump 2-Stroke" },
+                { "text": "Lawn Mowers" }
+            ];
+          } else if (selectedCategory === "solar") {
+            productOptions = [
+                { "text": "Solar Panels" },
+                { "text": "Submersible Pumps" }
+            ];
+          } else if (selectedCategory === "special") {
+            productOptions = [
+                { "text": "Trenchers" },
+                { "text": "Leaf Blowers" },
+                { "text": "Mini Dumpers" },
+                { "text": "Log Splitters" }
+            ];
+          } else if (selectedCategory === "sprayers") {
+            productOptions = [
+                { "text": "Knapsack Sprayers" },
+                { "text": "Manual Sprayers" },
+                { "text": "Mist Dusters" },
+                { "text": "Thermal Foggers" }
+            ];
+          } else if (selectedCategory === "chiper") {
+            productOptions = [
+                { "text": "Wood Chippers" },
+                { "text": "Corn Peelers and Threshers" },
+                { "text": "Straw Cutters" }
+            ];
           }
         
           return res.json({
@@ -227,31 +288,312 @@ app.post("/webhook", async (req, res) => {
           // console.log("User selected product:", selectedProduct);
         
           let modelOptions = [];
-          if (selectedProduct === "gasoline generators") {
-              modelOptions = [
-                  { "text": "BON-P-GG-2.8KW" },
-                  { "text": "BON-P-GG-3.7KW" },
-                  { "text": "BON-P-GG-5.0KW" },
-                  { "text": "BON-P-GG-7.5KW" },
-                  { "text": "BON-P-GG-9.0KW" },
-                  { "text": "BON-P-GG-9.5KW" },
-                  { "text": "BON-P-GG-12.0KW" },
-                  { "text": "BON-P-GG-13.5KW" },
-                  { "text": "BON-P-GG-16.0KW" },
-                  { "text": "BON-P-GG-18.5KW" },
-                  
-              ];
-          } else if (selectedProduct === "harvester") {
-              modelOptions = [
-                  { "text": "Harvester Pro 500" },
-                  { "text": "Harvester Max 700" }
-              ];
-          } else if (selectedProduct === "excavator") {
-              modelOptions = [
-                  { "text": "Excavator E300" },
-                  { "text": "Excavator E500" }
-              ];
-          }
+
+            if (selectedProduct === "gasoline generators") {
+                modelOptions = [
+                    { "text": "BON-P-GG-2.8KW" },
+                    { "text": "BON-P-GG-3.7KW" },
+                    { "text": "BON-P-GG-5.0KW" },
+                    { "text": "BON-P-GG-7.5KW" },
+                    { "text": "BON-P-GG-9.0KW" },
+                    { "text": "BON-P-GG-9.5KW" },
+                    { "text": "BON-P-GG-12.0KW" },
+                    { "text": "BON-P-GG-13.5KW" },
+                    { "text": "BON-P-GG-16.0KW" },
+                    { "text": "BON-P-GG-18.5KW" }
+                ];
+            } else if (selectedProduct === "gasoline inverter generators") {
+                modelOptions = [
+                    { "text": "BON-P-GI-1.8KW" },
+                    { "text": "BON-P-GI-2.1KW" },
+                    { "text": "BON-P-GI-2.5KW" },
+                    { "text": "BON-P-GI-2.9KW" },
+                    { "text": "BON-P-GI-3.5KW" },
+                    { "text": "BON-P-GI-3.8KW" },
+                    { "text": "BON-P-GI-5.5KW" },
+                    { "text": "BON-P-GI-7.5KW" }
+                ];
+            } else if (selectedProduct === "gasoline tillers") {
+                modelOptions = [
+                    { "text": "BON-DI-950" },
+                    { "text": "BON-GT-500B" },
+                    { "text": "BON-GT-500S" },
+                    { "text": "BON-GT-900" },
+                    { "text": "BON-GT-950T" },
+                    { "text": "BON-GT-950C" }
+                ];
+            } else if (selectedProduct === "gasoline water pumps") {
+                modelOptions = [
+                    { "text": "BON-P-WP1.0-31" },
+                    { "text": "BON-P-WP1.5-79" },
+                    { "text": "BON-P-WP2.0-149" },
+                    { "text": "BON-P-WP2.0-196" },
+                    { "text": "BON-P-WP3.0-196" },
+                    { "text": "BON-P-WP4.0-272" },
+                    { "text": "BON-P-WP1.5-224HL" },
+                    { "text": "BON-P-WP6.0-420" },
+                    { "text": "BON-P-WP2.0-224HL" },
+                    { "text": "BON-P-WP2.0-420HL" },
+                    { "text": "BON-P-WP3.0-420HL" },
+                    { "text": "BON-P-WP2.0-196CH" },
+                    { "text": "BON-P-WP2.0-196TR" },
+                    { "text": "BON-P-WP3.0-196TR" }
+                ];
+            } else if (selectedProduct === "gasoline engines") {
+                modelOptions = [
+                    { "text": "BON-P-GE-3.0HP" },
+                    { "text": "BON-P-GE-3.5HP" },
+                    { "text": "BON-P-GE-5.0HP" },
+                    { "text": "BON-P-GE-4.0HP" },
+                    { "text": "BON-P-GE-7.0HP" },
+                    { "text": "BON-P-GE-9.0HP" },
+                    { "text": "BON-P-GE-13.0HP" },
+                    { "text": "BON-P-GE-14.0HP" },
+                    { "text": "BON-P-GE-16.0HP" },
+                    { "text": "BON-P-GE-24.0HP" },
+                    { "text": "BON-P-GE-34.0HP" }
+                ];
+            } else if (selectedProduct === "welding machines") {
+                modelOptions = [
+                    { "text": "BON-WM-DUAL-200A" },
+                    { "text": "BON-WM-DUAL-130A" },
+                    { "text": "BON-WM-DUAL-160A" }
+                ];
+            } else if (selectedProduct === "centrifugal pumps") {
+                modelOptions = [
+                    { "text": "BON-P-CP-0.5HP" },
+                    { "text": "BON-P-CP-1.0HP" },
+                    { "text": "BON-P-CP-2.0HP" }
+                ];
+            } else if (selectedProduct === "submersible pumps") {
+                modelOptions = [
+                    { "text": "BON-P-SP-0.5HP" },
+                    { "text": "BON-P-SP-1.0HP" },
+                    { "text": "BON-P-SP-1.5HP" },
+                    { "text": "BON-P-SP-2.0HP" },
+                    { "text": "BON-P-SP-3.0HP" }
+                ];
+            } else if (selectedProduct === "tamping rammers") {
+                modelOptions = [
+                    { "text": "BON-P-TR-13.7KN-4.0HP" },
+                    { "text": "BON-P-TR-10KN-4.0HP" }
+                ];
+            } else if (selectedProduct === "plate compactors") {
+                modelOptions = [
+                    { "text": "BON-P-PC-10.5KN-6.5HP" },
+                    { "text": "BON-P-PC-15KN-6.5HP" },
+                    { "text": "BON-P-PC-11KN-6.5HP" }
+                ];
+            } else if (selectedProduct === "concrete cutters") {
+                modelOptions = [
+                    { "text": "BON-P-CC-14CM-13HP" },
+                    { "text": "BON-P-CC-15CM-13HP" }
+                ];
+            } else if (selectedProduct === "concrete vibrators") {
+                modelOptions = [
+                    { "text": "BON-P-CV-6M-6.5HP" }
+                ];
+            } else if (selectedProduct === "concrete power trowels") {
+                modelOptions = [
+                    { "text": "BON-PT-6.5HP" },
+                    { "text": "BON-SFS-38CC" }
+                ];
+            } else if (selectedProduct === "diesel water pumps") {
+                modelOptions = [
+                    { "text": "BON-P-DWP2.0-5.0HP" },
+                    { "text": "BON-P-DWP3.0-5.5HP" },
+                    { "text": "BON-P-DWP4.0-10.0HP" },
+                    { "text": "BON-P-DWP2.0-10.0HP" },
+                    { "text": "BON-P-DWP3.0-10.5HP" }
+                ];
+            } else if (selectedProduct === "diesel generators") {
+                modelOptions = [
+                    { "text": "BON-P-DG-3.0KW" },
+                    { "text": "BON-P-DG-3.5KW" },
+                    { "text": "BON-P-DG-6.0KW" },
+                    { "text": "BON-P-DG-6.5KW" },
+                    { "text": "BON-P-DG-9.0KW" },
+                    { "text": "BON-P-DG-10.0KW" }
+                ];
+            } else if (selectedProduct === "diesel engines") {
+                modelOptions = [
+                    { "text": "BON-P-DE-5.0HP" },
+                    { "text": "BON-P-DE-5.5HP" },
+                    { "text": "BON-P-DE-6.0HP" },
+                    { "text": "BON-P-DE-9.0HP" },
+                    { "text": "BON-P-DE-10.2HP" },
+                    { "text": "BON-P-DE-11.0HP" },
+                    { "text": "BON-P-DE-18.3HP" }
+                ];
+            } else if (selectedProduct === "gasoline pressure washers") {
+                modelOptions = [
+                    { "text": "BON-P-PW-G6.5HP-AP" },
+                    { "text": "BON-P-PW-G5HP-TP" },
+                    { "text": "BON-P-PW-G6.5HP-TP" },
+                    { "text": "BON-P-PW-G9.0HP-TP" },
+                    { "text": "BON-P-PW-G13.0HP-TP" }
+                ];
+            } else if (selectedProduct === "pressure washers for home use") {
+                modelOptions = [
+                    { "text": "BON-E-PW-1400W" },
+                    { "text": "BON-E-PW-1600W" },
+                    { "text": "BON-E-PW-2000W" }
+                ];
+            } else if (selectedProduct === "direct driven air compressors") {
+                modelOptions = [
+                    { "text": "BON-P-DDAC-25L" },
+                    { "text": "BON-P-DDAC-50L" }
+                ];
+            } else if (selectedProduct === "vacuum cleaners") {
+                modelOptions = [
+                    { "text": "BON-VC-1400W-30L" },
+                    { "text": "BON-VC-1400W-50L" }
+                ];
+            } else if (selectedProduct === "electric lawn mowers") {
+                modelOptions = [
+                    { "text": "BON-E-LM-1600W" },
+                    { "text": "BON-E-LM-1800W" }
+                ];
+            } else if (selectedProduct === "electric pressure washers") {
+                modelOptions = [
+                    { "text": "BON-P-PW-E2.2KW" },
+                    { "text": "BON-P-PW-E3.0KW" },
+                    { "text": "BON-P-PW-E5.5KW" },
+                    { "text": "BON-P-PW-E7.5KW" }
+                ];
+            } else if (selectedProduct === "brush cutters") {
+                modelOptions = [
+                    { "text": "BON-P-BC36" },
+                    { "text": "BON-ET-BC53" },
+                    { "text": "BON-P-BC45" }
+                ];
+            } else if (selectedProduct === "backpack brush cutters") {
+                modelOptions = [
+                    { "text": "BON-P-BP-BC45" }
+                ];
+            } else if (selectedProduct === "multi-tool equipment") {
+                modelOptions = [
+                    { "text": "BON-P-MT45" }
+                ];
+            } else if (selectedProduct === "chainsaws") {
+                modelOptions = [
+                    { "text": "BON-P-CS40" },
+                    { "text": "BON-P-CS55" },
+                    { "text": "BON-P-CS65" },
+                    { "text": "BON-P-CS92" }
+                ];
+            } else if (selectedProduct === "hedge trimmers") {
+                modelOptions = [
+                    { "text": "BON-P-HT23" }
+                ];
+            } else if (selectedProduct === "blowers") {
+                modelOptions = [
+                    { "text": "BON-P-BBL53" },
+                    { "text": "BON-P-BL26" },
+                    { "text": "BON-P-BLV26" }
+                ];
+            } else if (selectedProduct === "earth augers") {
+                modelOptions = [
+                    { "text": "BON-P-EA63" },
+                    { "text": "BON-P-EA52" },
+                    { "text": "BON-P-EA159-4S" }
+                ];
+            } else if (selectedProduct === "water pump 2-stroke") {
+                modelOptions = [
+                    { "text": "BON-WP1.0-52-2S" }
+                ];
+            } else if (selectedProduct === "lawn mowers") {
+                modelOptions = [
+                    { "text": "BON-P-LM22" }
+                ];
+            } else if (selectedProduct === "solar panels") {
+                modelOptions = [
+                    { "text": "BON-MC-SP-430W" }
+                ];
+            } else if (selectedProduct === "submersible pumps") { // Note: Also appears in Category 2.3, assuming same models here
+                modelOptions = [
+                    { "text": "BON-P-SP-0.5HP" },
+                    { "text": "BON-P-SP-1.0HP" },
+                    { "text": "BON-P-SP-1.5HP" },
+                    { "text": "BON-P-SP-2.0HP" },
+                    { "text": "BON-P-SP-3.0HP" }
+                ];
+            } else if (selectedProduct === "trenchers") {
+                modelOptions = [
+                    { "text": "" } // No specific models provided in PDF
+                ];
+            } else if (selectedProduct === "leaf blowers") { // Note: Also appears in Category 7.6, assuming distinct here
+                modelOptions = [
+                    { "text": "No specific model is here" } // No specific models provided in PDF
+                ];
+            } else if (selectedProduct === "mini dumpers") {
+                modelOptions = [
+                    { "text": "BON-P-EMD-1100W" },
+                    { "text": "MINI VOLQUETE (Snow Blade)" },
+                    { "text": "MINI VOLQUETE (Hydraulic)" }
+                ];
+            } else if (selectedProduct === "log splitters") {
+                modelOptions = [
+                    { "text": "BON-P-GLS-6575" },
+                    { "text": "BON-P-GLS-6561" }
+                ];
+            } else if (selectedProduct === "knapsack sprayers") {
+                modelOptions = [
+                    { "text": "BON-P-KS26" },
+                    { "text": "BON-P-KS37" }
+                ];
+            } else if (selectedProduct === "manual sprayers") {
+                modelOptions = [
+                    { "text": "BON-P-MS20L-JB" },
+                    { "text": "BON-P-MS5L" },
+                    { "text": "BON-P-MS20L-JP" },
+                    { "text": "BON-P-EMS-20" },
+                    { "text": "BON-P-MS2L" }
+                ];
+            } else if (selectedProduct === "mist dusters") {
+                modelOptions = [
+                    { "text": "BON-P-MD42" },
+                    { "text": "BON-P-MD52" },
+                    { "text": "BON-P-MD82" }
+                ];
+            } else if (selectedProduct === "thermal foggers") {
+                modelOptions = [
+                    { "text": "BON-P-TF6L" },
+                    { "text": "BON-P-TF2L" }
+                ];
+            } else if (selectedProduct === "wood chippers") {
+                modelOptions = [
+                    { "text": "High-Power Electric" },
+                    { "text": "BON-P-EWC-2.2KW" },
+                    { "text": "BON-P-EWC-1.5KW" },
+                    { "text": "BON-P-DWC-1015" },
+                    { "text": "ON-P-DWC-1012" },
+                    { "text": "BON-P-DWC-710" },
+                    { "text": "BON-P-GWC-2312" },
+                    { "text": "BON-P-GWC-15SH" },
+                    { "text": "BON-P-GWC-15SP" },
+                    { "text": "BON-P-GWC-1512H" },
+                    { "text": "BON-P-GWC-1515" },
+                    { "text": "BON-P-GWC-1512" },
+                    { "text": "BON-P-GWC-705" },
+                    { "text": "BON-P-GWC-708" },
+                    { "text": "BON-P-GWC-712" },
+                    { "text": "BON-P-GWC-710" }
+                ];
+            } else if (selectedProduct === "corn peelers and threshers") {
+                modelOptions = [
+                    { "text": "BON-GCT-1T" },
+                    { "text": "BON-ECT-1T" },
+                    { "text": "BON-GCT-2T" },
+                    { "text": "BON-ECT-2T" }
+                ];
+            } else if (selectedProduct === "straw cutters") {
+                modelOptions = [
+                    { "text": "BON-GCC-3T" },
+                    { "text": "BON-GCC-1T" },
+                    { "text": "BON-ECC-1T" }
+                ];
+            }
         
           return res.json({
               fulfillmentMessages: [
