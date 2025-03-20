@@ -178,84 +178,85 @@ app.post("/webhook", async (req, res) => {
           // console.log("User selected category:", selectedCategory);
         
           let productOptions = [];
-          if (selectedCategory === "agro") {
-              productOptions = [
-                  { "text": "Gasoline Generators" },
-                  { "text": "Gasoline Inverter Generators" },
-                  { "text": "Gasoline Tillers" },
-                  { "text": "Gasoline water Pumps" },
-                  { "text": "Gasoline Engines" }
-              ];
-          } else if (selectedCategory === "industrial") {
-              productOptions = [
-                  { "text": "Welding Machines" },
-                  { "text": "Centrifugal Pumps" },
-                  { "text": "Submersible Pumps" }
-              ];
-          } else if (selectedCategory === "construction") {
-              productOptions = [
-                  { "text": "Tamping Rammers" },
-                  { "text": "Plate Compactors" },
-                  { "text": "Concrete Cutters" },
-                  { "text": "Concrete Vibrators" },
-                  { "text": "Concrete Power Trowels" }
-              ];
-          } else if (selectedCategory === "diesel") {
+
+            if (selectedCategory === "agro") {
                 productOptions = [
-                    { "text": "Diesel Water Pumps" },
-                    { "text": "Diesel Generators" },
-                    { "text": "Diesel Engines" }
+                    { "text": "gasoline generators" },
+                    { "text": "gasoline inverter generators" },
+                    { "text": "gasoline tillers" },
+                    { "text": "gasoline water pumps" },
+                    { "text": "gasoline engines" }
                 ];
-          } else if (selectedCategory === "domestic") {
-            productOptions = [
-                { "text": "Gasoline Pressure Washers" },
-                { "text": "Pressure Washers" },
-                { "text": "Direct Driven Air Compressors" },
-                { "text": "Vacuum Ceaners" }
-            ];
-          } else if (selectedCategory === "electric") {
-            productOptions = [
-                { "text": "Electric Lawn Mowers" },
-                { "text": "Electric Pressure Washers" }
-            ];
-          } else if (selectedCategory === "garden") {
-            productOptions = [
-                { "text": "Brush Cutters" },
-                { "text": "Backpack Brush Cutters" },
-                { "text": "Multi-Tool Equipment" },
-                { "text": "Chainsaws" },
-                { "text": "Hedge Trimmers" },
-                { "text": "Blowers" },
-                { "text": "Earth Augers" },
-                { "text": "Water Pump 2-Stroke" },
-                { "text": "Lawn Mowers" }
-            ];
-          } else if (selectedCategory === "solar") {
-            productOptions = [
-                { "text": "Solar Panels" },
-                { "text": "Submersible Pumps" }
-            ];
-          } else if (selectedCategory === "special") {
-            productOptions = [
-                { "text": "Trenchers" },
-                { "text": "Leaf Blowers" },
-                { "text": "Mini Dumpers" },
-                { "text": "Log Splitters" }
-            ];
-          } else if (selectedCategory === "sprayers") {
-            productOptions = [
-                { "text": "Knapsack Sprayers" },
-                { "text": "Manual Sprayers" },
-                { "text": "Mist Dusters" },
-                { "text": "Thermal Foggers" }
-            ];
-          } else if (selectedCategory === "chiper") {
-            productOptions = [
-                { "text": "Wood Chippers" },
-                { "text": "Corn Peelers and Threshers" },
-                { "text": "Straw Cutters" }
-            ];
-          }
+            } else if (selectedCategory === "industrial") {
+                productOptions = [
+                    { "text": "welding machines" },
+                    { "text": "centrifugal pumps" },
+                    { "text": "submersible pumps" }
+                ];
+            } else if (selectedCategory === "construction") {
+                productOptions = [
+                    { "text": "tamping rammers" },
+                    { "text": "plate compactors" },
+                    { "text": "concrete cutters" },
+                    { "text": "concrete vibrators" },
+                    { "text": "concrete power trowels" }
+                ];
+            } else if (selectedCategory === "diesel") {
+                productOptions = [
+                    { "text": "diesel water pumps" },
+                    { "text": "diesel generators" },
+                    { "text": "diesel engines" }
+                ];
+            } else if (selectedCategory === "domestic") {
+                productOptions = [
+                    { "text": "gasoline pressure washers" },
+                    { "text": "pressure washers" },
+                    { "text": "direct driven air compressors" },
+                    { "text": "vacuum cleaners" } // Fixed typo "Vacuum Ceaners" to "vacuum cleaners"
+                ];
+            } else if (selectedCategory === "electric") {
+                productOptions = [
+                    { "text": "electric lawn mowers" },
+                    { "text": "electric pressure washers" }
+                ];
+            } else if (selectedCategory === "garden") {
+                productOptions = [
+                    { "text": "brush cutters" },
+                    { "text": "backpack brush cutters" },
+                    { "text": "multi-tool equipment" },
+                    { "text": "chainsaws" },
+                    { "text": "hedge trimmers" },
+                    { "text": "blowers" },
+                    { "text": "earth augers" },
+                    { "text": "water pump 2-stroke" },
+                    { "text": "lawn mowers" }
+                ];
+            } else if (selectedCategory === "solar") {
+                productOptions = [
+                    { "text": "solar panels" },
+                    { "text": "submersible pumps" }
+                ];
+            } else if (selectedCategory === "special") {
+                productOptions = [
+                    { "text": "trenchers" },
+                    { "text": "leaf blowers" },
+                    { "text": "mini dumpers" },
+                    { "text": "log splitters" }
+                ];
+            } else if (selectedCategory === "sprayers") {
+                productOptions = [
+                    { "text": "knapsack sprayers" },
+                    { "text": "manual sprayers" },
+                    { "text": "mist dusters" },
+                    { "text": "thermal foggers" }
+                ];
+            } else if (selectedCategory === "chiper") {
+                productOptions = [
+                    { "text": "wood chippers" },
+                    { "text": "corn peelers and threshers" },
+                    { "text": "straw cutters" }
+                ];
+            }
         
           return res.json({
             fulfillmentMessages: [
