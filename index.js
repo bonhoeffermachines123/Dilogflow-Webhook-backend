@@ -627,7 +627,7 @@ app.post("/webhook", async (req, res) => {
         contextText = productdetails + basicinfo;
         console.log("Our context : ",contextText);
 
-        const query = `Provide details for model ${parameters.product_model}, if it is present in the document. otherwise responde 'Sorry, this product is not present in our data'`;
+        const query = `Provide details for model ${parameters.product_model} in a paragraph or a user friendly way, if it is present in the document. otherwise responde 'Sorry, this product is not present in our data'`;
         const aiResponse = await generateAIResponse(query, contextText);
         return res.json({ fulfillmentText: aiResponse });
     
@@ -635,7 +635,7 @@ app.post("/webhook", async (req, res) => {
 
 
         contextText = productdetails + basicinfo;
-        const query = `Answer the query: ${userQuery}, if present in out context.`;
+        const query = `Answer the query: "${userQuery}" in para or pointer which will be user friendly, if present in our context.`;
         const aiResponse = await generateAIResponse(query, contextText);
         return res.json({ fulfillmentText: aiResponse });
   
