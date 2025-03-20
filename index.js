@@ -101,11 +101,11 @@ async function generateAIResponse(query, contextdoc) {
 
 // modifies webhook api
 app.post("/webhook", async (req, res) => {
-    console.clear();
+    
   const userQuery = req.body.queryResult.queryText;
   const parameters = req.body.queryResult.parameters;
   let contextText = basicinfo;
-  console.log("req.body :  ", req.body);
+//   console.log("req.body :  ", req.body);
   
   const sessionId = req.body.session; // ✅ Extract session ID correctly
   // console.log("Req.body is:", req.body);
@@ -956,6 +956,7 @@ if (parameters.product) {
 
 
   // Step 4: Generate AI Response using updated context
+  console.log("ContextTExt: ", contextText);
   const aiResponse = await generateAIResponse(userQuery, contextText);
   return res.json({ fulfillmentText: aiResponse });
 
