@@ -644,6 +644,132 @@ app.post("/webhook", async (req, res) => {
 
 
 
+  //Now for importer:
+  else if(userRole?.toLowerCase() == "importer" || parameters?.user_role?.toLowerCase() == "importer"){
+        console.log("I am in importer role section:");
+
+        if(parameters?.user_role.toLowerCase() == "importer" && !importerID){
+            return res.json({ fulfillmentText: "Please provide your Importer ID for verification:" });
+        }
+        else if(parameters?.user_role.toLowerCase() == "importer" && importerID){
+            return res.json({ fulfillmentText: "Already validated, You can ask questions:" });
+        }
+
+
+        if (parameters.importer_id) {
+            const importerID = String(parameters.importer_id).trim();
+            console.log("I am in Parameter.importerid in importer role, Your importer ID:", importerID);
+        
+        
+            if (importerData.includes(importerID)) {
+                console.log('I am in valid importer with session ID:', sessionId);
+                
+                return res.json({
+                    fulfillmentMessages: [  // ✅ Use fulfillmentMessages, not fulfillmentText
+                        {
+                            "payload": {
+                                "richContent": [
+                                    [
+                                        {
+                                            "title": "✅ Verified Importer!",
+                                            "type": "description",
+                                            "text": [
+                                                "What would you like to know?"
+                                            ]
+                                        },
+                                        {
+                                            "type": "chips", // ✅ Correct rich content structure
+                                            "options": [
+                                              {
+                                                    "text": "Invoice"
+                                            
+                                              },
+                                              {
+                                                  "text": "Packing List"
+                                          
+                                              },  
+                                              {
+                                                    "text": "Shipment Date"
+                                            
+                                                },
+                                              {
+                                                    "text": "Tentative Production Time"
+                                            
+                                                },
+                                              {
+                                                    "text": "Product Price List"
+                                            
+                                                },
+                                              {
+                                                    "text": "MOQ(Minimum Order Quantity)"
+                                            
+                                                },
+                                              {
+                                                    "text": "Flyers"
+                                            
+                                                },
+                                              {
+                                                    "text": "User Manuals"
+                                            
+                                                },
+                                              {
+                                                    "text": "Product Technical Details"
+                                            
+                                                },
+                                              {
+                                                    "text": "CRM Login"
+                                            
+                                                },
+                                            ]
+                                        }
+                                    ]
+                                ]
+                            }
+                        }
+                    ],
+                    outputContexts: [
+                        {
+                            name: `${sessionId}/contexts/user_role_context`, // ✅ Use sessionId as is
+                            lifespanCount: 50,  // Stores for 50 interactions
+                            parameters: { 
+                                user_role: "importer",
+                                importer_id: importerID
+                            }
+                        }
+                    ]
+                });
+        
+            } else {
+                return res.json({ fulfillmentText: "❌ Invalid Importer ID. You can only ask general questions." });
+            }
+        }
+
+
+        if(userRole){
+            const ur = userRole.toLowerCase();
+            
+            if(importerID){
+            let importerid = String(importerID).trim();
+            const filePath = `./datafiles/${importerid}.pdf`;
+            const importerDetails = await extractPDFText(filePath); // Read the corresponding PDF file
+            contextText = importerDetails + "\n\n" + basicinfo; // Append Importer details
+            // console.log("Contexttext is :\n",contextText);
+            }else{
+            return res.json({ fulfillmentText: 'Importer id is not provided or invalid:' });
+            }
+        }
+        
+            
+            
+        console.log("ContextTExt: ", contextText);
+        const aiResponse = await generateAIResponse(userQuery, contextText);
+        return res.json({ fulfillmentText: aiResponse });
+
+
+  }
+
+
+
 
   if (!parameters.product_model && parameters.importer_option) {
     const selectedOption = parameters.importer_option.toLowerCase();
@@ -789,29 +915,7 @@ if (parameters.product) {
 
 
 
-  if(userRole){
-    const ur = userRole.toLowerCase();
-    if (ur === "importer") {
-      
-      if(importerID){
-        let importerid = String(importerID).trim();
-        const filePath = `./datafiles/${importerid}.pdf`;
-        const importerDetails = await extractPDFText(filePath); // Read the corresponding PDF file
-        contextText = importerDetails + "\n\n" + basicinfo; // Append Importer details
-        // console.log("Contexttext is :\n",contextText);
-      }else{
-        return res.json({ fulfillmentText: 'Importer id is not provided or invalid:' });
-      }
-
-    }
-    else if(ur === "customer"){
-      contextText = customers + "\n" + basicinfo; // Append Dealer & Customer data
-      
-    }
-    else if(ur === "dealer"){
-      contextText =  dealers + "\n" + basicinfo; // Append Dealer & Customer data
-      
-    }
+  
 
     
     if (parameters.product_model) {
@@ -838,120 +942,31 @@ if (parameters.product) {
       
     }
 
-    const aiResponse = await generateAIResponse(userQuery, contextText);
-    return res.json({ fulfillmentText: aiResponse });
-
-  }
+    
 
 
 
 
   // do the following when there will be no data in context:
   // parameter based action based on first time:
-  if (parameters.user_role){
-    //In this we need to provide options:
-    const ur = parameters.user_role.toLowerCase();
+//   if (parameters.user_role){
+//     //In this we need to provide options:
+//     const ur = parameters.user_role.toLowerCase();
 
-    if (ur === "importer") {
-      return res.json({ fulfillmentText: "Please provide your Importer ID for verification:" });
-    }
-    else if(ur === "customer"){
-      contextText = customers + "\n" + basicinfo; // Append Dealer & Customer data
-    }
-    else if(ur === "dealer"){
-      contextText =  dealers + "\n" + basicinfo; // Append Dealer & Customer data
-    }
+//     if (ur === "importer") {
+//       return res.json({ fulfillmentText: "Please provide your Importer ID for verification:" });
+//     }
+//     else if(ur === "customer"){
+//       contextText = customers + "\n" + basicinfo; // Append Dealer & Customer data
+//     }
+//     else if(ur === "dealer"){
+//       contextText =  dealers + "\n" + basicinfo; // Append Dealer & Customer data
+//     }
       
-  }
+//   }
 
   // for validating importer id
-  if (parameters.importer_id) {
-    const importerID = String(parameters.importer_id).trim();
-    console.log("I am in Parameter.importer, Your importer ID:", importerID);
-
-
-    if (importerData.includes(importerID)) {
-        console.log('I am in valid importer with session ID:', sessionId);
-        
-        return res.json({
-            fulfillmentMessages: [  // ✅ Use fulfillmentMessages, not fulfillmentText
-                {
-                    "payload": {
-                        "richContent": [
-                            [
-                                {
-                                    "title": "✅ Verified Importer!",
-                                    "type": "description",
-                                    "text": [
-                                        "What would you like to know?"
-                                    ]
-                                },
-                                {
-                                    "type": "chips", // ✅ Correct rich content structure
-                                    "options": [
-                                      {
-                                            "text": "Invoice"
-                                    
-                                      },
-                                      {
-                                          "text": "Packing List"
-                                  
-                                      },  
-                                      {
-                                            "text": "Shipment Date"
-                                    
-                                        },
-                                      {
-                                            "text": "Tentative Production Time"
-                                    
-                                        },
-                                      {
-                                            "text": "Product Price List"
-                                    
-                                        },
-                                      {
-                                            "text": "MOQ(Minimum Order Quantity)"
-                                    
-                                        },
-                                      {
-                                            "text": "Flyers"
-                                    
-                                        },
-                                      {
-                                            "text": "User Manuals"
-                                    
-                                        },
-                                      {
-                                            "text": "Product Technical Details"
-                                    
-                                        },
-                                      {
-                                            "text": "CRM Login"
-                                    
-                                        },
-                                    ]
-                                }
-                            ]
-                        ]
-                    }
-                }
-            ],
-            outputContexts: [
-                {
-                    name: `${sessionId}/contexts/user_role_context`, // ✅ Use sessionId as is
-                    lifespanCount: 50,  // Stores for 50 interactions
-                    parameters: { 
-                        user_role: "importer",
-                        importer_id: importerID
-                    }
-                }
-            ]
-        });
-
-    } else {
-        return res.json({ fulfillmentText: "❌ Invalid Importer ID. You can only ask general questions." });
-    }
-}
+  
 
 
 
