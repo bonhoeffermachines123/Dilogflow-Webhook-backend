@@ -105,7 +105,7 @@ app.post("/webhook", async (req, res) => {
   const userQuery = req.body.queryResult.queryText;
   const parameters = req.body.queryResult.parameters;
   let contextText = basicinfo;
-//   console.log("req.body :  ", req.body);
+  console.log("req.body :  ", req.body);
   
   const sessionId = req.body.session; // ✅ Extract session ID correctly
   // console.log("Req.body is:", req.body);
