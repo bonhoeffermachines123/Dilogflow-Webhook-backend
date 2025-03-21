@@ -645,7 +645,7 @@ app.post("/webhook", async (req, res) => {
 
 
   //Now for importer:
-  else if(userRole?.toLowerCase() == "importer" || parameters?.user_role?.toLowerCase() == "importer"){
+  else if(userRole?.toLowerCase() == "importer" || parameters?.user_role?.toLowerCase() == "importer" || parameters?.importer_id){
         console.log("I am in importer role section:");
 
         if(parameters?.user_role.toLowerCase() == "importer" && !importerID){
