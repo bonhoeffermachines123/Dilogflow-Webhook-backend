@@ -648,15 +648,15 @@ app.post("/webhook", async (req, res) => {
   else if(userRole?.toLowerCase() == "importer" || parameters?.user_role?.toLowerCase() == "importer" || parameters?.importer_id){
         console.log("I am in importer role section:");
 
-        if(parameters?.user_role.toLowerCase() == "importer" && !importerID){
+        if(parameters?.user_role?.toLowerCase() == "importer" && !importerID){
             return res.json({ fulfillmentText: "Please provide your Importer ID for verification:" });
         }
-        else if(parameters?.user_role.toLowerCase() == "importer" && importerID){
+        else if(parameters?.user_role?.toLowerCase() == "importer" && importerID){
             return res.json({ fulfillmentText: "Already validated, You can ask questions:" });
         }
 
 
-        if (parameters.importer_id) {
+        if (parameters?.importer_id) {
             const importerID = String(parameters.importer_id).trim();
             console.log("I am in Parameter.importerid in importer role, Your importer ID:", importerID);
         
