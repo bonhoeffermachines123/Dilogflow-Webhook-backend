@@ -657,59 +657,59 @@ app.post("/webhook", async (req, res) => {
 
 
         //creating options for importer:
-        if (!parameters.product_model && parameters.importer_option) {
-            const selectedOption = parameters.importer_option.toLowerCase();
-            console.log("User selected importer option:", selectedOption);
+        // if (!parameters.product_model && parameters.importer_option) {
+        //     const selectedOption = parameters.importer_option.toLowerCase();
+        //     console.log("User selected importer option:", selectedOption);
         
-            // Skip category selection if CRM Login is selected
-            if (selectedOption === "crm login") {
-                return res.json({ fulfillmentText: "🔑 You can access CRM here: [CRM Login Link](https://crm.bonhoeffermachines.com)" });
-            }
+        //     // Skip category selection if CRM Login is selected
+        //     if (selectedOption === "crm login") {
+        //         return res.json({ fulfillmentText: "🔑 You can access CRM here: [CRM Login Link](https://crm.bonhoeffermachines.com)" });
+        //     }
         
-            // Ask user to select a category first
-            return res.json({
-                fulfillmentMessages: [
-                    {
-                        "payload": {
-                            "richContent": [
-                                [
-                                    {
-                                        "title": `Selected Option: ${selectedOption}`,
-                                        "type": "description",
-                                        "text": [
-                                            "Now, please select a product category:"
-                                        ]
-                                    },
-                                    {
-                                        "type": "chips",
-                                        "options": [
-                                            { "text": "Agro Industrial" },
-                                            { "text": "Bonhoeffer Industrial" },
-                                            { "text": "Construction" },
-                                            { "text": "Diesel Machines" },
-                                            { "text": "Domestic and Commercial Products" },
-                                            { "text": "Electric Machines" },
-                                            { "text": "Garden and Forestry" },
-                                            { "text": "Wood Chiper and Chaff cutter" },
-                                            { "text": "Solar" },
-                                            { "text": "Special Segment" },
-                                            { "text": "Sprayers and Fumigation" },
-                                        ]
-                                    }
-                                ]
-                            ]
-                        }
-                    }
-                ],
-                outputContexts: [
-                    {
-                        name: `${sessionId}/contexts/selecting_category`,
-                        lifespanCount: 10,
-                        parameters: { importer_option: selectedOption }
-                    }
-                ]
-            });
-        }
+        //     // Ask user to select a category first
+        //     return res.json({
+        //         fulfillmentMessages: [
+        //             {
+        //                 "payload": {
+        //                     "richContent": [
+        //                         [
+        //                             {
+        //                                 "title": `Selected Option: ${selectedOption}`,
+        //                                 "type": "description",
+        //                                 "text": [
+        //                                     "Now, please select a product category:"
+        //                                 ]
+        //                             },
+        //                             {
+        //                                 "type": "chips",
+        //                                 "options": [
+        //                                     { "text": "Agro Industrial" },
+        //                                     { "text": "Bonhoeffer Industrial" },
+        //                                     { "text": "Construction" },
+        //                                     { "text": "Diesel Machines" },
+        //                                     { "text": "Domestic and Commercial Products" },
+        //                                     { "text": "Electric Machines" },
+        //                                     { "text": "Garden and Forestry" },
+        //                                     { "text": "Wood Chiper and Chaff cutter" },
+        //                                     { "text": "Solar" },
+        //                                     { "text": "Special Segment" },
+        //                                     { "text": "Sprayers and Fumigation" },
+        //                                 ]
+        //                             }
+        //                         ]
+        //                     ]
+        //                 }
+        //             }
+        //         ],
+        //         outputContexts: [
+        //             {
+        //                 name: `${sessionId}/contexts/selecting_category`,
+        //                 lifespanCount: 10,
+        //                 parameters: { importer_option: selectedOption }
+        //             }
+        //         ]
+        //     });
+        // }
 
         //giving product options:
         if (parameters.product_category) {
@@ -1163,29 +1163,29 @@ app.post("/webhook", async (req, res) => {
 
 
           //after take model:
-          if (parameters.product_model) {
-            if(!parameters.importer_option){
-              const selectedModel = parameters.product_model.toLowerCase();
-              const selectedOption = req.body.queryResult.outputContexts.find(ctx => ctx.name.includes("selecting_category"))?.parameters?.importer_option;
+        //   if (parameters.product_model) {
+        //     if(!parameters.importer_option){
+        //       const selectedModel = parameters.product_model.toLowerCase();
+        //       const selectedOption = req.body.queryResult.outputContexts.find(ctx => ctx.name.includes("selecting_category"))?.parameters?.importer_option;
               
-            //   console.log(`User selected model: ${selectedModel} for castum option: ${selectedOption}`);
+        //     //   console.log(`User selected model: ${selectedModel} for castum option: ${selectedOption}`);
         
-              const query = `Provide ${selectedOption} for model ${selectedModel}, if it is present in the document`;
-              const aiResponse = await generateAIResponse(query, contextText);
-              return res.json({ fulfillmentText: aiResponse });
-            }
-            else{
-              const selectedModel = parameters.product_model.toLowerCase();
-              const selectedOption = parameters.importer_option;
+        //       const query = `Provide ${selectedOption} for model ${selectedModel}, if it is present in the document`;
+        //       const aiResponse = await generateAIResponse(query, contextText);
+        //       return res.json({ fulfillmentText: aiResponse });
+        //     }
+        //     else{
+        //       const selectedModel = parameters.product_model.toLowerCase();
+        //       const selectedOption = parameters.importer_option;
               
-            //   console.log(`User selected model: ${selectedModel} for parameter option: ${selectedOption}`);
+        //     //   console.log(`User selected model: ${selectedModel} for parameter option: ${selectedOption}`);
         
-              const query = `Provide ${selectedOption} for model ${selectedModel}, if it is present in the document. otherwise responde this product is not present in your data`;
-              const aiResponse = await generateAIResponse(query, contextText);
-              return res.json({ fulfillmentText: aiResponse }); 
-            }
+        //       const query = `Provide ${selectedOption} for model ${selectedModel}, if it is present in the document. otherwise responde this product is not present in your data`;
+        //       const aiResponse = await generateAIResponse(query, contextText);
+        //       return res.json({ fulfillmentText: aiResponse }); 
+        //     }
             
-          }
+        //   }
 
 
 
@@ -1297,7 +1297,7 @@ app.post("/webhook", async (req, res) => {
         
             
             
-        console.log("ContextTExt: ", contextText);
+        // console.log("ContextTExt: ", contextText);
         const aiResponse = await generateAIResponse(userQuery, contextText);
         return res.json({ fulfillmentText: aiResponse });
 
