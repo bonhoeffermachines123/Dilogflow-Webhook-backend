@@ -86,7 +86,7 @@ async function generateAIResponse(query, contextdoc) {
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [{ role: "user", content: prompt }],
-      temperature: 0.7,
+      temperature: 0.3,
       max_tokens: 200
     });
 
